@@ -1,0 +1,6 @@
+C:\Users\Magda\source\repos\DialogueSystemEditor\DialogueSystemEditor.Model\bin\Debug\DialogueSystemEditor.Model.dll
+C:\Users\Magda\source\repos\DialogueSystemEditor\DialogueSystemEditor.Model\bin\Debug\DialogueSystemEditor.Model.pdb
+C:\Users\Magda\source\repos\DialogueSystemEditor\DialogueSystemEditor.Model\obj\Debug\DialogueSystemEditor.Model.csprojAssemblyReference.cache
+C:\Users\Magda\source\repos\DialogueSystemEditor\DialogueSystemEditor.Model\obj\Debug\DialogueSystemEditor.Model.csproj.CoreCompileInputs.cache
+C:\Users\Magda\source\repos\DialogueSystemEditor\DialogueSystemEditor.Model\obj\Debug\DialogueSystemEditor.Model.dll
+C:\Users\Magda\source\repos\DialogueSystemEditor\DialogueSystemEditor.Model\obj\Debug\DialogueSystemEditor.Model.pdb

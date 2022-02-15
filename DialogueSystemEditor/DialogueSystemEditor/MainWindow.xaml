@@ -1,0 +1,194 @@
+﻿<Window x:Class="DialogueSystemEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DialogueSystemEditor"
+        xmlns:model="clr-namespace:DialogueSystemEditor.Model.DataLayer;assembly=DialogueSystemEditor.Model"
+        mc:Ignorable="d"
+        x:Name="_MAINWINDOW"
+        xmlns:converters="clr-namespace:DialogueSystemEditor.UI.Converters"
+        xmlns:ViewModels="clr-namespace:DialogueSystemEditor.ViewModels"
+        Title="Dialogue Editor" 
+        Height="720" 
+        Closing="Window_Closing"
+        Width="1080">
+    <Window.Resources>
+        <converters:FilenameToPreviewConverter x:Key="FilenameToPreviewConverter" />
+    </Window.Resources>
+    
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenOptionsCommand}"
+                    Key="O"
+                    Modifiers="Ctrl+Shift" />
+        <KeyBinding Command="{Binding OpenCommand}"
+                    Key="O"
+                    Modifiers="Ctrl" />
+        <KeyBinding Key="N"
+                    Modifiers="Ctrl+Shift"
+                    Command="{Binding NewCommand}" />
+        <KeyBinding Key="S"
+                    Modifiers="Ctrl"
+                    Command="{Binding SaveCommand}" />
+        <KeyBinding Key="N"
+                    Modifiers="Ctrl+Alt"
+                    Command="{Binding NewRootElementCommand}" />
+        <KeyBinding Key="N"
+                    Modifiers="Ctrl"
+                    Command="{Binding NewElementCommand}" />
+        <KeyBinding Key="Delete"
+                    Modifiers="Ctrl"
+                    Command="{Binding DeleteElementCommand}" />
+    </Window.InputBindings>
+    <Window.DataContext>
+        <ViewModels:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <Grid x:Name="MainWindowInstance"
+          Margin="10 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Header="New" 
+                          InputGestureText="Ctrl + Shift + N"
+                          Command="{Binding NewCommand}" />
+                <MenuItem Header="Open"
+                          InputGestureText="Ctrl + O"
+                          Command="{Binding OpenCommand}"/>
+                <MenuItem Header="Open recent"
+                          ItemsSource="{Binding ApplicationSettings.LastOpened}">
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding}"
+                                    Command="{Binding ElementName=_MAINWINDOW, Path=DataContext.OpenCommand}"
+                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
+                <MenuItem Header="Save as..." 
+                          Command="{Binding SaveCommand}" 
+                          InputGestureText="Ctrl + S"/>
+                <Separator />
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Options..."
+                          InputGestureText="Ctrl + Shift + O"
+                          Command="{Binding OpenOptionsCommand}" />
+            </MenuItem>
+        </Menu>
+        <DockPanel Grid.Row="1">
+            <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Top"
+                        HorizontalAlignment="Left"
+                        Margin="0 0 0 5">
+                <Button Padding="3"
+                        Command="{Binding NewRootElementCommand}">
+                    <Button.ToolTip>
+                        <Border Padding="5">
+                            <StackPanel>
+                                <TextBlock Text="New Root Element"
+                                           FontWeight="Bold"
+                                           Margin="0 0 0 3" />
+                                <Separator Margin="0 0 0 5"/>
+                                <TextBlock Text="Add a new root element." />
+                                <TextBlock Text="Root Elements represent dialogue openers." />
+                                <Separator Margin="0 5" />
+                                <TextBlock Text="Ctrl + Alt + N"
+                                           FontWeight="DemiBold" />
+                            </StackPanel>
+                        </Border>
+                    </Button.ToolTip>
+
+                    <Image Source="/Resources/Images/add_root_element.png"
+                           Width="20"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Height="20" />
+                </Button>
+                <Button Padding="3"
+                        Margin="5 0 0 0"
+                        Command="{Binding NewElementCommand}">
+                    <Button.ToolTip>
+                        <Border Padding="5">
+                            <StackPanel>
+                                <TextBlock Text="New Element"
+                                           FontWeight="Bold"
+                                           Margin="0 0 0 3" />
+                                <Separator Margin="0 0 0 5"/>
+                                <TextBlock Text="Adds a new dialogue part as child of the currently selected element." />
+                                <TextBlock Text="Sublements / Dialogue parts define the path a dialogue will follow." />
+                                <Separator Margin="0 5" />
+                                <TextBlock Text="Ctrl + N"
+                                           FontWeight="DemiBold" />
+                            </StackPanel>
+                        </Border>
+                    </Button.ToolTip>
+
+
+                    <Image Source="/Resources/Images/add_element.png"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Width="20"
+                           Height="20" />
+                </Button>
+                
+                <Button Padding="3"
+                        Margin="5 0 0 0"
+                        Command="{Binding DeleteElementCommand}">
+                    <Button.ToolTip>
+                        <Border Padding="5">
+                            <StackPanel>
+                                <TextBlock Text="Delete Element"
+                                           FontWeight="Bold"
+                                           Margin="0 0 0 3" />
+                                <Separator Margin="0 0 0 5"/>
+                                <TextBlock Text="Deletes the currently selected element and all its children." />
+                                <Separator Margin="0 5" />
+                                <TextBlock Text="Ctrl + Delete"
+                                           FontWeight="DemiBold" />
+                            </StackPanel>
+                        </Border>
+                    </Button.ToolTip>
+
+                    <Image Source="/Resources/Images/remove_element.png"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Width="20"
+                           Height="20" />
+                </Button>
+            </StackPanel>
+           
+            
+            <TreeView ItemsSource="{Binding Dialogue.TopElements}"
+                      SelectedItemChanged="TreeView_SelectedItemChanged">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type model:DialoguePart}"
+                                              ItemsSource="{Binding Children}">
+                        <Border Padding="5">
+                            <TextBlock Text="{Binding ContentPreview}"/>
+                        </Border>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            
+        </DockPanel>
+        <DockPanel Margin="10,0,0,0" Grid.Row="1" Grid.Column="1"
+                   LastChildFill="False">
+            <TextBlock Text="Preview Content" DockPanel.Dock="Top"/>
+            <TextBox Margin="0,0,0,5" Text="{Binding SelectedDialoguePart.ContentPreview}" DockPanel.Dock="Top"/>
+            <TextBlock Text="Content" DockPanel.Dock="Top"/>
+            <TextBox Text="{Binding SelectedDialoguePart.Content}" DockPanel.Dock="Top"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"/>
+        </DockPanel>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem x:Name="statusbar" Content="Statusbar"/>
+        </StatusBar>
+    </Grid>
+</Window>
